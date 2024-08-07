@@ -5,30 +5,28 @@
 }
 
 .container {
-  padding: 60px;
-  width: 1280px;
   display: flex;
   flex-direction: column;
-  align-items: start;
-  gap: 24px;
+  align-items: center;
+  padding: 20px;
+  background: #f0f2f5;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-button {
-  border: none;
-  border-radius: 8px;
-  background-color: rgb(201, 200, 255);
-  height: 30px;
-  box-shadow: 1px 1px 2px 2px #868686;
-  cursor: pointer;
-  transition: transform cubic-bezier(0.075, 0.82, 0.165, 1);
+h2 {
+  font-size: 1.5em;
+  color: #ff4d4f;
+  margin-top: 10px;
 }
 
-button:hover,
-button:focus {
-  background-color: rgb(184, 183, 248);
-  transform: scale(1.03);
+h1.loading {
+  color: #007bff;
+  margin-top: 10px;
 }
