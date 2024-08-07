@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { nanoid } from "nanoid";
 import s from "./ContactForm.module.css";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
+import { addContactThunk } from "../../redux/contactsOps";
 
 const initialValues = {
   name: "",
@@ -30,7 +30,7 @@ const ContactForm = () => {
 
   const handleSubmit = (values, actions) => {
     dispatch(
-      addContact({
+      addContactThunk({
         name: values.name,
         number: values.number,
       })

@@ -3,16 +3,17 @@ import "./App.css";
 import ContactForm from "./ContactForm/ContactForm";
 import ContactList from "./ContactList/ContactList";
 import SearchBox from "./SearchBox/SearchBox";
-import { loading } from "../redux/selectors";
+import { error, loading } from "../redux/selectors";
 import { useEffect } from "react";
-import { fetchContacts } from "../redux/contactsOps";
+import { fetchContactsThunk } from "../redux/contactsOps";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(fetchContactsThunk());
   }, [dispatch]);
   const isLoading = useSelector(loading);
+  const isError = useSelector(error)
 
   return (
     <div className="container">
@@ -20,6 +21,7 @@ function App() {
       <ContactForm />
       <SearchBox />
       {isLoading && <h1>Loading...</h1>}
+      {isError  && <h2>Something went wrong!</h2>}
       <ContactList />
     </div>
   );
