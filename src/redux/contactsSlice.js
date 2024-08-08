@@ -1,4 +1,4 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import {
   addContactThunk,
   deleteContactThunk,
@@ -21,32 +21,36 @@ const contactSlice = createSlice({
         state.items = action.payload;
         state.loading = false;
       })
-      .addCase(fetchContactsThunk.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(fetchContactsThunk.rejected, (state, action) => {
-        state.error = true;
-      })
       .addCase(deleteContactThunk.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item.id !== action.payload);
         state.loading = false;
-      })
-      .addCase(deleteContactThunk.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(deleteContactThunk.rejected, (state, action) => {
-        state.error = true;
       })
       .addCase(addContactThunk.fulfilled, (state, action) => {
         state.items.push(action.payload);
         state.loading = false;
       })
-      .addCase(addContactThunk.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(addContactThunk.rejected, (state, action) => {
-        state.error = true;
-      });
+      .addMatcher(
+        isAnyOf(
+          fetchContactsThunk.pending,
+          deleteContactThunk.pending,
+          addContactThunk.pending
+        ),
+        (state) => {
+          state.loading = true;
+          state.error = false;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchContactsThunk.rejected,
+          deleteContactThunk.rejected,
+          addContactThunk.rejected
+        ),
+        (state) => {
+          state.error = true;
+          state.loading = false;
+        }
+      );
   },
 });
 
